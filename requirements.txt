@@ -2,3 +2,4 @@ selectorlib
 requests
 fastapi
 uvicorn
+hypercorn
