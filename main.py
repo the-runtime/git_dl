@@ -12,6 +12,10 @@ def remove_file(dir_name) -> None:
 
 app = FastAPI()
 
+@app.get("/check")
+def check():
+    return {"hello","bye"}
+
 @app.post("/url")
 def  hello(Req:req, background_tasks: BackgroundTasks):
     url = Req.url
