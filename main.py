@@ -17,7 +17,7 @@ def check():
     return {"hello","bye"}
 
 @app.get("/url/{url}")
-def  hello(background_tasks: BackgroundTasks):
+def  hello(url: str, background_tasks: BackgroundTasks):
     #url1 = Req.url
     url = url
     dir_name = github_downloader.run(url)
