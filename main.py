@@ -16,9 +16,10 @@ app = FastAPI()
 def check():
     return {"hello","bye"}
 
-@app.post("/url")
+@app.post("/url/{url}")
 def  hello(Req:req, background_tasks: BackgroundTasks):
-    url = Req.url
+    url1 = Req.url
+    url = url
     dir_name = github_downloader.run(url)
 
     def iterfile():  #
