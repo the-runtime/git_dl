@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import github_downloader
-from routerequest import req
+#from routerequest import req
 from fastapi.responses import StreamingResponse
 from starlette.background import BackgroundTasks
 import os
@@ -16,9 +16,9 @@ app = FastAPI()
 def check():
     return {"hello","bye"}
 
-@app.post("/url/{url}")
-def  hello(Req:req, background_tasks: BackgroundTasks):
-    url1 = Req.url
+@app.get("/url/{url}")
+def  hello(background_tasks: BackgroundTasks):
+    #url1 = Req.url
     url = url
     dir_name = github_downloader.run(url)
 
