@@ -4,6 +4,14 @@ import requests
 import os
 import io
 
+def per20(st):
+  i = st.find("%20")
+  t_st = list(st)
+  t_st[i] = "/"
+  t_st[i+1] = ""
+  t_st[i+2] = ""
+  r_st = "".join(t_st)
+  return r_st
 
 
 def fit(t):
@@ -64,14 +72,15 @@ def scrape(url):
 
 
 
-def run(url):
+def run(per_url):
        
 
         def diz(u):
          nex=u.find(urt)+len(urt)
          return(u[nex:])
     
-
+        
+      url = per20(per_url)
 
         urt=url
         while True :
