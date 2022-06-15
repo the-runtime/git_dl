@@ -72,7 +72,7 @@ def scrape(url):
 
 
 
-def run(per_url):
+def run(url):
        
 
         def diz(u):
@@ -80,9 +80,9 @@ def run(per_url):
          return(u[nex:])
     
         
-        url = per20(per_url)
+        #url = per20(per_url)
         print("hellonknjfb")
-        url = "https:/"+url
+        #url = "https:/"+url
         urt=url
         while True :
             ur=urt.find("/")+1
