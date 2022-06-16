@@ -6,11 +6,23 @@ from starlette.background import BackgroundTasks
 import os
 import shutil
 
+app = FastAPI()
+
 def remove_file(dir_name) -> None:
     os.remove(dir_name + ".zip")
     shutil.rmtree(dir_name)
 
-app = FastAPI()
+
+
+
+@app.get("/",response_class=HTMLResponse)
+def start_page():
+    fi_html = open("README.html","r")
+    data = fi_html.read()
+    fi_html.close()
+    return  data
+
+
 
 @app.get("/check")
 def check():
