@@ -2,7 +2,10 @@ import shutil
 from selectorlib import Extractor
 import requests
 import os
-import io
+import asyncio
+import aiohttp
+from aiohttp import ClientSession
+#import io
 
 
 def per20(st):
@@ -30,17 +33,53 @@ def fit(t):
         i = i + 1
 
 
-def rel(t, master):
+async def rel(t,master):
+    asyncio.create_task(scrape("https://github.com/"+r["link"]) for r in t if r['type'] == "folder")
+
+
+
+async def rel(t, master):
     for r in t:
         if r['type'] == "folder":
-            data = scrape("https://github.com" + r["link"])
+            data = await scrape(url ="https://github.com" + r["link"])
             t = data["branches"]
             fit(t)
-            rel(t, master)
+            await rel(t, master)
             master.append(t)
 
 
-def scrape(url):
+async def scrape(url):
+    e = Extractor.from_yaml_file('selector.yml')
+    headers = {
+        'authority': 'www.github.com/',
+        'pragma': 'no-cache',
+        'cache-control': 'no-cache',
+        'dnt': '1',
+        'upgrade-insecure-requests': '1',
+        'user-agent': 'Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.64 Safari/537.36',
+        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'sec-fetch-site': 'none',
+        'sec-fetch-mode': 'navigate',
+        'sec-fetch-dest': 'document',
+        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+    }
+    # Download the page using requests
+    print("Reading page: %s" % url)
+    async with aiohttp.ClientSession() as session:
+        async with  session.get(url, headers=headers) as r:
+            # Simple check to check if page was blocked (Usually 503)
+            '''if r.status> 500:
+                if "To discuss automated access to flipkart data please contact" in r.text:
+                    print("Page %s was blocked by flipkart. Please try using better proxies\n" % url)
+                else:
+                    print("Page %s must have been blocked by flipkart as the status code was %d" % (url, r.status_code))
+                return None'''
+            # Pass the HTML of the page and create
+            return e.extract(await r.text())
+
+
+
+def scrape2(url):
     e = Extractor.from_yaml_file('selector.yml')
     headers = {
         'authority': 'www.github.com/',
@@ -65,8 +104,8 @@ def scrape(url):
         else:
             print("Page %s must have been blocked by flipkart as the status code was %d" % (url, r.status_code))
         return None
-    # Pass the HTML of the page and create 
-    return e.extract(r.text)
+    # Pass the HTML of the page and create
+    return e.extract( r.text)
 
 
 def run(url):
@@ -87,12 +126,12 @@ def run(url):
 
     print(urt)
 
-    data = scrape(url)
+    data = scrape2(url)
     t = data["branches"]
     fit(t)
 
     master = [t]
-    rel(t, master)
+    asyncio.run(rel(t, master))
 
     # try:
     #   os.mkdir(path)
@@ -122,3 +161,9 @@ def run(url):
     shutil.make_archive(dir_name, 'zip', dir_name)
 
     return dir_name
+
+if __name__ == "__main__":
+    inp = input("enter the url of the folder\n")
+    run(inp)
+
+
