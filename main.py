@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 import github_downloader
 from routerequest import req
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, RedirectResponse
 from fastapi.responses import HTMLResponse
+from starlette.staticfiles import StaticFiles
 from starlette.background import BackgroundTasks
 import os
 import shutil
@@ -15,12 +16,7 @@ def remove_file(dir_name) -> None:
     shutil.rmtree(dir_name)
 
 
-@app.get("/", response_class=HTMLResponse)
-def start_page():
-    fi_html = open("README.html", "r")
-    data = fi_html.read()
-    fi_html.close()
-    return data
+
 
 
 @app.get("/check")
@@ -34,6 +30,14 @@ def get_add(REQ: req):
     dir_name = github_downloader.run(url)
 
     return dir_name
+
+@app.get("/gitdl/")
+def gitdl(link:str):
+    print("git_dl")
+    if link is not None:
+        dir_name = github_downloader.run(link)
+        response = RedirectResponse("download/"+dir_name)
+        return response
 
 
 @app.get("/download/{name}")
@@ -52,10 +56,13 @@ def download(name: str, background_tasks: BackgroundTasks):
     return resp
 
 
-@app.get("/url/{url1}")
-def hello(url1: str, background_tasks: BackgroundTasks):
+
+
+@app.get("/url/")
+def hello(link: str, background_tasks: BackgroundTasks):
     # url1 = Req.url
-    url = github_downloader.per20(url1)
+    #url = github_downloader.per20(url1)
+    url = link
     dir_name = github_downloader.run(url)
 
     def iterfile():  #
@@ -70,3 +77,6 @@ def hello(url1: str, background_tasks: BackgroundTasks):
 
     background_tasks.add_task(remove_file, dir_name)
     return resp
+
+#for website data
+app.mount("/", StaticFiles(directory="website"),name="web")
