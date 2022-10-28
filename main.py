@@ -78,5 +78,9 @@ def hello(link: str, background_tasks: BackgroundTasks):
     background_tasks.add_task(remove_file, dir_name)
     return resp
 
+@app.get("/")
+async def strat_page():
+    response = RedirectResponse("/index.html")
+    return response
 #for website data
 app.mount("/", StaticFiles(directory="website"),name="web")
