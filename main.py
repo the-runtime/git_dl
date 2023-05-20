@@ -1,3 +1,6 @@
+import azure.functions as func
+
+
 from fastapi import FastAPI
 import github_downloader
 from routerequest import req
@@ -84,3 +87,7 @@ async def strat_page():
     return response
 #for website data
 app.mount("/", StaticFiles(directory="website"),name="web")
+
+app = func.AsgiFunctionApp(app=app,
+                           http_auth_level=func.AuthLevel.ANONYMOUS)
+
