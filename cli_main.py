@@ -5,4 +5,4 @@ if len(sys.argv) > 1:
     url = sys.argv[1]
     run(url)
 else:
-    print("Enter a gihub repo")
+    print("Enter a github repo")
