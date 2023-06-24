@@ -1,6 +1,7 @@
 #test related file
 .idea/
 
+env/
 venv/
 temp/
 
