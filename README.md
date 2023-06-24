@@ -1,7 +1,7 @@
 # github_downloader
 This python program will let you download specific folders from any  github repository.
 
-This application is hosted on http://gitdl.theruntime.software and also at http://gitdl.onrender.com
+
 
 
 <!-- To download any github folder send get request to http://gitdl.onrender.com/url/{link_of_folder}     
