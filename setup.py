@@ -6,7 +6,7 @@ setup(
     author='the runtime',
     author_email='theruntime7@gmail.com',
     description='Cli app to download github repo folders',
-    # long_description='A longer description of your app',
+    long_description='A longer description of your app',
     url='https://github.com/the-runtime/git_dl',
     packages=find_packages(),
     package_data={
