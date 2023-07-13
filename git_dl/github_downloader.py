@@ -41,7 +41,21 @@ def rel(t, master):
 
 
 def scrape(url):
-    e = Extractor.from_yaml_file('git_dl/data/selector.yml')
+    e = Extractor.from_yaml_string('''branches:
+        css: 'div.Box-row:nth-of-type(n+2)'
+        xpath: null
+        multiple: true
+        type: Link
+        children:
+            name:
+                css: 'div.flex-auto.col-md-2 span.css-truncate'
+                xpath: null
+                type: Text
+            link:
+                css: a.js-navigation-open
+                xpath: null
+                type: Link
+    ''')
     headers = {
         'authority': 'www.github.com/',
         'pragma': 'no-cache',
