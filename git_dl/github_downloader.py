@@ -41,7 +41,7 @@ def rel(t, master):
 
 
 def scrape(url):
-    e = Extractor.from_yaml_file('data/selector.yml')
+    e = Extractor.from_yaml_file('git_dl/data/selector.yml')
     headers = {
         'authority': 'www.github.com/',
         'pragma': 'no-cache',
