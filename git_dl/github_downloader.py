@@ -61,11 +61,13 @@ def scrape(url):
     # Simple check to check if page was blocked (Usually 503)
     if r.status_code > 500:
         if "To discuss automated access to flipkart data please contact" in r.text:
-            print("Page %s was blocked by flipkart. Please try using better proxies\n" % url)
+            print(
+                "Page %s was blocked by flipkart. Please try using better proxies\n" % url)
         else:
-            print("Page %s must have been blocked by flipkart as the status code was %d" % (url, r.status_code))
+            print("Page %s must have been blocked by flipkart as the status code was %d" % (
+                url, r.status_code))
         return None
-    # Pass the HTML of the page and create 
+    # Pass the HTML of the page and create
     return e.extract(r.text)
 
 
@@ -113,7 +115,8 @@ def run(url):
             if r1["type"] == "file":
                 try:
                     print("downloading file: %s" % r1["name"])
-                    myfile = requests.get("https://raw.githubusercontent.com" + r1["link"])
+                    myfile = requests.get(
+                        "https://raw.githubusercontent.com" + r1["link"])
                     open(urt1 + diz(r1["link"]), 'wb').write(myfile.content)
                 except:
                     print("there is some problem with that file")
