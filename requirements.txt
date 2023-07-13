@@ -1,6 +1,2 @@
 selectorlib
 requests
-fastapi
-uvicorn
-hypercorn
-gunicorn
