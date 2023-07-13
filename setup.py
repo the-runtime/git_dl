@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='git_dl',
-    version='0.0.2',
+    version='0.0.3',
     author='the runtime',
     author_email='theruntime7@gmail.com',
     description='Cli app to download github repo folders',
