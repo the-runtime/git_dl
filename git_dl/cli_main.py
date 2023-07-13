@@ -1,5 +1,6 @@
-from .github_downloader import run
 import sys
+
+from .github_downloader import run
 
 
 def start():

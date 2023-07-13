@@ -1,8 +1,9 @@
-import shutil
-from selectorlib import Extractor
-import requests
-import os
 import io
+import os
+import shutil
+
+import requests
+from selectorlib import Extractor
 
 
 def per20(st):
